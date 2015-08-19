@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <ListPreference
+        android:defaultValue="9"
+        android:entries="@array/settings_widget_entrycount"
+        android:entryValues="@array/settings_widget_entrycount"
+        android:key="widget.entrycount"
+        android:summary="@string/settings_widgetentrycount_description"
+        android:title="@string/settings_widgetentrycount" />
+
+    <com.imlongluo.blogreader.widget.ColorPickerDialogPreference
+        android:dialogLayout="@layout/colortransparencypicker"
+        android:key="widget.background"
+        android:negativeButtonText="@android:string/cancel"
+        android:positiveButtonText="@android:string/ok"
+        android:summary="@string/settings_widgetbackground_description"
+        android:title="@string/settings_widgetbackground" />
+
+    <PreferenceCategory
+        android:key="widget.visiblefeeds"
+        android:title="@string/settings_visiblefeeds" />
+
+</PreferenceScreen>

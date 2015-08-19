@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.imlongluo.blogreader"
+    android:installLocation="auto"
+    android:versionCode="2"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="3"
+        android:targetSdkVersion="11" />
+
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+"
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+
+    <!-- Android 1.5 requires this -->
+    <uses-permission android:name="com.imlongluo.blogreader.READFEEDS" />
+    <uses-permission android:name="com.imlongluo.blogreader.WRITEFEEDS" />
+
+    <permission
+        android:name="com.imlongluo.blogreader.READFEEDS"
+        android:description="@string/permission_readfeeds_description"
+        android:label="@string/permission_readfeeds"
+        android:protectionLevel="normal" />
+    <permission
+        android:name="com.imlongluo.blogreader.WRITEFEEDS"
+        android:description="@string/permission_writefeeds_description"
+        android:label="@string/permission_writefeeds"
+        android:protectionLevel="normal" />
+
+    <application
+        android:name="com.imlongluo.blogreader.MainApplication"
+        android:allowBackup="true"
+        android:allowClearUserData="true"
+        android:icon="@drawable/icon"
+        android:label="@string/app_name"
+        android:testOnly="false" >
+        <activity
+            android:name=".MainTabActivity"
+            android:label="@string/app_name"
+            android:launchMode="singleTask" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".RSSOverview"
+            android:launchMode="singleTask" />
+        <activity android:name=".EmptyActivity" />
+        <activity
+            android:name=".EntriesListActivity"
+            android:launchMode="singleTask" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="vnd.android.cursor.dir/vnd.feeddata.entry" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".EntryActivity"
+            android:launchMode="singleTask" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="vnd.android.cursor.item/vnd.feeddata.entry" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".ApplicationPreferencesActivity" />
+        <activity android:name=".widget.WidgetConfigActivity" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".FeedConfigActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.EDIT" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="vnd.android.cursor.item/vnd.feeddata.feed" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.INSERT" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="vnd.android.cursor.dir/vnd.feeddata.feed" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="cn.sharesdk.framework.ShareSDKUIShell"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:windowSoftInputMode="stateHidden|adjustResize" >
+            <intent-filter>
+                <data android:scheme="tencent100371282" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <!-- 微信分享回调 -->
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <!-- 易信分享回调 -->
+        <activity
+            android:name=".yxapi.YXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <service android:name=".service.RefreshService" />
+        <service android:name=".service.FetcherService" />
+
+        <provider
+            android:name=".provider.FeedDataContentProvider"
+            android:authorities="com.imlongluo.blogreader.provider.FeedData"
+            android:readPermission="com.imlongluo.blogreader.READFEEDS"
+            android:writePermission="com.imlongluo.blogreader.WRITEFEEDS" />
+
+        <receiver android:name=".widget.BlogReaderAppWidgetProvider" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="com.imlongluo.blogreader.FEEDUPDATED" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widgetinfo" />
+        </receiver>
+        <receiver android:name=".RefreshBroadcastReceiver" >
+            <intent-filter>
+                <action android:name="com.imlongluo.blogreader.REFRESH" />
+                <action android:name="com.imlongluo.blogreader.STOPREFRESH" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".BootCompletedBroadcastReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Caution! Do not change this app key. It is only for demo usage. -->
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="541ce4aafd98c518b60224f1" >
+        </meta-data>
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="GooglePlayStore" >
+        </meta-data>
+    </application>
+
+</manifest>

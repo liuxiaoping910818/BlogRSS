@@ -1,0 +1,8 @@
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:configure="com.imlongluo.blogreader.widget.WidgetConfigActivity"
+    android:initialLayout="@layout/homescreenwidget"
+    android:minHeight="147dp"
+    android:minResizeHeight="70dp"
+    android:minWidth="294dp"
+    android:resizeMode="vertical"
+    android:updatePeriodMillis="0" />
