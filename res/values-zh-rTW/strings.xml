@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Long Luo's Blog</string>
+    <string name="app_name">BlogRSS Reader</string>
     <string name="menu_addfeed">增加一个订站点</string>
     <string name="norssfeeds">没有RSS订阅站点</string>
     <string name="noentries">没有文章</string>
